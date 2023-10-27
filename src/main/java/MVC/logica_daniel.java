@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.*;
 //Falta arreglar el binario y agregar lo del KeyListener
-public class CalculatorApp extends JFrame implements ActionListener {
+public class logica_daniel extends JFrame implements ActionListener {
     private JTextField textField;
     private String currentInput;
     private double memory[];
@@ -18,7 +18,7 @@ public class CalculatorApp extends JFrame implements ActionListener {
     private boolean isPrimoMode = false;
 
 
-    public CalculatorApp() {
+    public logica_daniel() {
         setTitle("Calculadora");
         setSize(400, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -237,7 +237,7 @@ public class CalculatorApp extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            CalculatorApp calculator = new CalculatorApp();
+            logica_daniel calculator = new logica_daniel();
             calculator.setVisible(true);
         });
     }
@@ -248,8 +248,7 @@ public class CalculatorApp extends JFrame implements ActionListener {
 
     //binario
     private String toBinary(double number) {
-        long binaryValue = Double.doubleToRawLongBits(number);
-        return Long.toBinaryString(binaryValue);
+        return Integer.toBinaryString((int) number);
     }
     //primo
     private boolean esPrimo(double number) {
