@@ -2,6 +2,10 @@ package MVC;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 
 final class Controller {
 
@@ -181,7 +185,9 @@ final class Controller {
     }
     
     private void pressDataButton() {
-        model.get_data();
+        JScrollPane scrollPane = model.getData();
+        JOptionPane.showMessageDialog(view, scrollPane, "Bitácora", JOptionPane.PLAIN_MESSAGE);
+        model.getData();
         updateView();
     }
 }

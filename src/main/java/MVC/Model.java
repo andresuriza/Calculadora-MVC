@@ -1,7 +1,17 @@
 package MVC;
 
+import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 final class Model {
     private String resultDisplay;
@@ -11,13 +21,24 @@ final class Model {
     private boolean firstDigit;
     private final static int MAX_INPUT_DIGITS = 12;
     private final static int MAX_RESULT_DECIMALS = 5;
+//----------------------------------------------------------
+
+    private double memory[];
+    private int memoryIndex;
+
+    private static boolean isBinaryMode = false;
+    private static boolean isPrimoMode = false;
+
 
     public Model() {
         reset();
+        memory = new double[10];
+        memoryIndex = 0;
     }
-
+    
     private static double doTheMath(char op, double v1, double v2)
             throws ArithmeticException {
+        
         double result = 0.0;
 
         switch (op) {
@@ -60,6 +81,15 @@ final class Model {
     }
 
     public void insertNumber(int n) {
+         if (isBinaryMode) {
+            resultDisplay = "Error: Modo Binario";
+            return;
+        }
+        if (isPrimoMode) {
+            resultDisplay = "Error: Modo Primo";
+            return;
+        }
+        
         if (inErrorMode) {
             return;
         }
@@ -113,31 +143,17 @@ final class Model {
         resultDisplay += ".";
     }
 
-    public void switchSign() {
-        if (inErrorMode) {
-            return;
-        }
-
-        // Control if we are expecting the user to introduce a new number
-        if (firstDigit && !currentOp.isEmpty()) {
-            resultDisplay = "-0";
-            firstDigit = false;
-            return;
-        }
-
-        if (resultDisplay.charAt(0) == '-') {
-            resultDisplay = resultDisplay.substring(1);
-        } else {
-            resultDisplay = "-" + resultDisplay;
-        }
-
-        if (firstDigit) {
-            firstDigit = false;
-        }
-    }
-
     public void setOperation(char op) {
         calculate();
+        
+        if (isBinaryMode) {
+            resultDisplay = "Error: Modo Binario";
+            return;
+        }
+        if (isPrimoMode) {
+            resultDisplay = "Error: Modo Primo";
+            return;
+        }
 
         if (inErrorMode) {
             return;
@@ -157,7 +173,15 @@ final class Model {
         }
     }
 
-    public void calculate() {
+    public void calculate() throws IOException {
+        if (isBinaryMode) {
+            resultDisplay = "Error: Modo Binario";
+            return;
+        }
+        if (isPrimoMode) {
+            resultDisplay = "Error: Modo Primo";
+            return;
+        }
         if (inErrorMode) {
             return;
         }
@@ -174,27 +198,25 @@ final class Model {
 
             resultDisplay = result.toString();
             currentOp = "";
-
+            
+            
             // After this operation we expect the user to introduce a new number
             firstDigit = true;
         } catch (NumberFormatException | ArithmeticException e) {
             enterErrorMode();
         }
-    }
-
-    public void clean() {
-        if (inErrorMode) {
-            return;
-        }
-
-        resultDisplay = "0";
-        firstDigit = true;
+        
+        BufferedWriter writer = new BufferedWriter(new FileWriter("Bitacora.txt", true));
+        writer.write(currentOp + " = " + resultDisplay);
+        writer.newLine();
     }
 
     public void reset() {
         tempValue = 0.0;
 
         resultDisplay = "0";
+        isBinaryMode = false; // Sale del modo binario
+        isPrimoMode = false; //sale del modo primo
         firstDigit = true;
         inErrorMode = false;
 
@@ -202,28 +224,84 @@ final class Model {
     }
     
     public void binary() {
-        //TODO
-        System.out.println("Binary button pressed");
+        try {
+            double number = Double.parseDouble(resultDisplay);
+            String binaryValue = toBinary(number);
+            resultDisplay = binaryValue;
+            isBinaryMode = true;
+        } catch (NumberFormatException e) {
+            resultDisplay = "Error";
+        }
+    }
+    
+    private String toBinary(double number) {
+        return Integer.toBinaryString((int) number);
     }
     
     public void average() {
-        //TODO
-        System.out.println("Average button pressed");
+        double sum = 0;
+        for (int i = 0; i < memoryIndex; i++) {
+            sum += memory[i];
+        }
+        double average = memoryIndex > 0 ? sum / memoryIndex : 0;
+        resultDisplay = String.valueOf(average);
+    }
+    
+    private boolean esPrimo(double number) {
+        if (number <= 1) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(number); i++) {
+            if (number % i == 0) {
+                return false;
+            }
+        }
+        return true;
     }
     
     public void primo() {
-        //TODO
-        System.out.println("Primo button pressed");
+        try {
+            double number = Double.valueOf(resultDisplay);
+            boolean esPrimo = esPrimo(number);
+            resultDisplay = String.valueOf(esPrimo);
+            isPrimoMode = true;
+        } catch (NumberFormatException e) {
+            resultDisplay = "Error";
+        }
     }
     
     public void memory() {
-        //TODO
-        System.out.println("Memory button pressed");
+           if (memoryIndex < memory.length) {
+            memory[memoryIndex] = Double.parseDouble(resultDisplay);
+            memoryIndex++;
+        } else {
+            // Si la memoria está llena, sustituye el número más antiguo
+            memoryIndex = 0;
+            memory[memoryIndex] = Double.parseDouble(resultDisplay);
+        }
+        reset();
     }
     
-    public void get_data() {
-        //TODO
-        System.out.println("Data button pressed");
+    public JScrollPane getData() {
+           // Código para mostrar registros de Bitacora.txt en una nueva ventana
+        try (BufferedReader reader = new BufferedReader(new FileReader("resources/Bitacora.txt"))) {
+            StringBuilder data = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                data.append(line).append("\n");
+            }
+            JTextArea textArea = new JTextArea(data.toString());
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            textArea.setWrapStyleWord(true);
+            textArea.setLineWrap(true);
+            textArea.setEditable(false);
+            scrollPane.setPreferredSize(new Dimension(400, 300));
+            return scrollPane;
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void enterErrorMode() {
