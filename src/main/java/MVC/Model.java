@@ -2,14 +2,10 @@ package MVC;
 
 import java.awt.Dimension;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -21,24 +17,19 @@ final class Model {
     private boolean firstDigit;
     private final static int MAX_INPUT_DIGITS = 12;
     private final static int MAX_RESULT_DECIMALS = 5;
-//----------------------------------------------------------
-
     private double memory[];
     private int memoryIndex;
-
     private static boolean isBinaryMode = false;
     private static boolean isPrimoMode = false;
-
-
+    
     public Model() {
         reset();
         memory = new double[10];
         memoryIndex = 0;
     }
-    
+
     private static double doTheMath(char op, double v1, double v2)
             throws ArithmeticException {
-        
         double result = 0.0;
 
         switch (op) {
@@ -81,7 +72,7 @@ final class Model {
     }
 
     public void insertNumber(int n) {
-         if (isBinaryMode) {
+        if (isBinaryMode) {
             resultDisplay = "Error: Modo Binario";
             return;
         }
@@ -145,7 +136,6 @@ final class Model {
 
     public void setOperation(char op) {
         calculate();
-        
         if (isBinaryMode) {
             resultDisplay = "Error: Modo Binario";
             return;
@@ -154,7 +144,6 @@ final class Model {
             resultDisplay = "Error: Modo Primo";
             return;
         }
-
         if (inErrorMode) {
             return;
         }
@@ -173,7 +162,7 @@ final class Model {
         }
     }
 
-    public void calculate() throws IOException {
+    public void calculate() {
         if (isBinaryMode) {
             resultDisplay = "Error: Modo Binario";
             return;
@@ -182,6 +171,7 @@ final class Model {
             resultDisplay = "Error: Modo Primo";
             return;
         }
+        
         if (inErrorMode) {
             return;
         }
@@ -198,29 +188,36 @@ final class Model {
 
             resultDisplay = result.toString();
             currentOp = "";
-            
-            
+
             // After this operation we expect the user to introduce a new number
             firstDigit = true;
         } catch (NumberFormatException | ArithmeticException e) {
             enterErrorMode();
         }
-        
-        BufferedWriter writer = new BufferedWriter(new FileWriter("Bitacora.txt", true));
-        writer.write(currentOp + " = " + resultDisplay);
-        writer.newLine();
+    }
+
+    public void clean() {
+        if (inErrorMode) {
+            return;
+        }
+
+        resultDisplay = "0";
+        firstDigit = true;
     }
 
     public void reset() {
         tempValue = 0.0;
 
         resultDisplay = "0";
-        isBinaryMode = false; // Sale del modo binario
-        isPrimoMode = false; //sale del modo primo
         firstDigit = true;
         inErrorMode = false;
-
+        isBinaryMode = false; // Sale del modo binario
+        isPrimoMode = false; //sale del modo primo
         currentOp = "";
+    }
+    
+    private String toBinary(double number) {
+        return Integer.toBinaryString((int) number);
     }
     
     public void binary() {
@@ -232,10 +229,6 @@ final class Model {
         } catch (NumberFormatException e) {
             resultDisplay = "Error";
         }
-    }
-    
-    private String toBinary(double number) {
-        return Integer.toBinaryString((int) number);
     }
     
     public void average() {
@@ -271,7 +264,7 @@ final class Model {
     }
     
     public void memory() {
-           if (memoryIndex < memory.length) {
+        if (memoryIndex < memory.length) {
             memory[memoryIndex] = Double.parseDouble(resultDisplay);
             memoryIndex++;
         } else {
@@ -303,7 +296,6 @@ final class Model {
         }
         return null;
     }
-
     private void enterErrorMode() {
         inErrorMode = true;
         resultDisplay = "Error";

@@ -2,8 +2,6 @@ package MVC;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
