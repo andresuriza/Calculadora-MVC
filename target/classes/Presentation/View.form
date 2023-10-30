@@ -26,147 +26,121 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="resultField" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="num4Button" min="-2" pref="60" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="num5Button" min="-2" pref="60" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="num7Button" min="-2" pref="60" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="num8Button" min="-2" pref="60" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="num9Button" min="-2" pref="60" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="divButton" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                                          <Component id="mulButton" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="memButton" min="-2" max="-2" attributes="0"/>
-                                          <Component id="avgButton" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="num6Button" min="-2" pref="60" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="subButton" min="-2" pref="60" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="num0Button" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="dotButton" min="-2" pref="72" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="num1Button" min="-2" pref="60" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="num2Button" min="-2" pref="60" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="num0Button" min="-2" pref="84" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                                      <Component id="resetButton" min="-2" pref="60" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="dotButton" min="-2" pref="60" max="-2" attributes="0"/>
-                                  <Component id="num3Button" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="addButton" min="-2" pref="60" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="equalButton" min="-2" pref="68" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="primoButton" min="-2" pref="152" max="-2" attributes="0"/>
-                                  <Component id="binButton" min="-2" pref="152" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                              <Component id="dataButton" min="-2" pref="147" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="num1Button" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="num2Button" min="-2" pref="73" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                              <Component id="num3Button" min="-2" pref="72" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="resultField" min="-2" pref="440" max="-2" attributes="0"/>
+                      <Component id="equalButton" min="-2" pref="72" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="primoButton" max="32767" attributes="0"/>
+                          <Component id="resetButton" alignment="0" max="32767" attributes="0"/>
+                          <Component id="num7Button" alignment="0" max="32767" attributes="0"/>
+                          <Component id="num4Button" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="binButton" max="32767" attributes="0"/>
+                              <Component id="memButton" max="32767" attributes="0"/>
+                              <Component id="num8Button" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="num5Button" min="-2" pref="72" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="num9Button" min="-2" pref="72" max="-2" attributes="0"/>
+                                  <Component id="divButton" min="-2" pref="72" max="-2" attributes="0"/>
+                                  <Component id="avgButton" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="num6Button" min="-2" pref="72" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="addButton" max="32767" attributes="0"/>
+                          <Component id="dataButton" max="32767" attributes="0"/>
+                          <Component id="mulButton" alignment="0" max="32767" attributes="0"/>
+                          <Component id="subButton" alignment="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="resultField" min="-2" pref="41" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="binButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="dataButton" alignment="3" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="primoButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="54" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="divButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="avgButton" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
-              </Group>
+              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+              <Component id="resultField" min="-2" pref="63" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="num7Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="num8Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="num9Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="mulButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                      <Component id="memButton" min="-2" pref="47" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="binButton" alignment="0" pref="70" max="32767" attributes="0"/>
+                  <Component id="primoButton" alignment="0" max="32767" attributes="0"/>
+                  <Component id="dataButton" alignment="1" max="32767" attributes="0"/>
+                  <Component id="avgButton" alignment="1" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="memButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="resetButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="divButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="mulButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="num7Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="num8Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="num9Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="subButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="num4Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="num5Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="num6Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="subButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="addButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="equalButton" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="num1Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="addButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="num3Button" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="num2Button" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="num0Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="num1Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="num2Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="num3Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="dotButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="resetButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="num0Button" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="equalButton" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -232,6 +206,9 @@
         <Property name="text" type="java.lang.String" value="1"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="num1ButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="num2Button">
       <Properties>
@@ -296,6 +273,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Primo"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="primoButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="dataButton">
       <Properties>
