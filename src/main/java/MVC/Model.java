@@ -2,7 +2,9 @@ package MVC;
 
 import java.awt.Dimension;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -49,7 +51,8 @@ final class Model {
                 result = v1 / v2;
                 break;
         }
-
+        
+    
         return round(result, MAX_RESULT_DECIMALS);
     }
 
@@ -85,19 +88,16 @@ final class Model {
             return;
         }
 
-        // Control if we have to replace the display
         if (firstDigit) {
             resultDisplay = String.valueOf(n);
             firstDigit = false;
             return;
         }
-        
-        // Control we don't go over the limit of the display
+
         if (resultDisplay.length() >= MAX_INPUT_DIGITS) {
             return;
         }
 
-        // Control we don't have 0s on the left
         if (resultDisplay.equals("0")) {
             resultDisplay = String.valueOf(n);
             return;
@@ -115,7 +115,6 @@ final class Model {
             return;
         }
 
-        // Control that if it is the firstDigit it will add a 0 to the left
         if (firstDigit) {
             resultDisplay = "0.";
             firstDigit = false;
@@ -126,7 +125,6 @@ final class Model {
             return;
         }
 
-        // Control we don't have more than one dot at the same time
         if (resultDisplay.contains(".")) {
             return;
         }
@@ -149,13 +147,10 @@ final class Model {
         }
 
         try {
-            // Stores the current value on display so we don't loose it when the
-            // user introduces a new number
             tempValue = Double.valueOf(resultDisplay);
 
             currentOp = String.valueOf(op);
 
-            // After this operation we expect the user to introduce a new number
             firstDigit = true;
         } catch (Exception e) {
             enterErrorMode();
@@ -183,26 +178,28 @@ final class Model {
         try {
             char op = currentOp.charAt(0);
             Double valueIndisplay = Double.valueOf(resultDisplay);
-
+            
+     
             Double result = doTheMath(op, tempValue, valueIndisplay);
 
             resultDisplay = result.toString();
             currentOp = "";
 
-            // After this operation we expect the user to introduce a new number
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("resources/Bitacora.txt", true))) {
+                writer.write(Double.toString(tempValue) + String.valueOf(op) + valueIndisplay.toString() + " = " + resultDisplay);
+                writer.newLine();
+            } 
+            
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+
             firstDigit = true;
-        } catch (NumberFormatException | ArithmeticException e) {
+        } 
+        
+        catch (NumberFormatException | ArithmeticException e) {
             enterErrorMode();
         }
-    }
-
-    public void clean() {
-        if (inErrorMode) {
-            return;
-        }
-
-        resultDisplay = "0";
-        firstDigit = true;
     }
 
     public void reset() {
@@ -226,7 +223,18 @@ final class Model {
             String binaryValue = toBinary(number);
             resultDisplay = binaryValue;
             isBinaryMode = true;
-        } catch (NumberFormatException e) {
+            
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("resources/Bitacora.txt", true))) {
+                writer.write("Binario " + Double.toString(number) + " " + resultDisplay);
+                writer.newLine();
+            } 
+            
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        } 
+        
+        catch (NumberFormatException e) {
             resultDisplay = "Error";
         }
     }
@@ -238,17 +246,34 @@ final class Model {
         }
         double average = memoryIndex > 0 ? sum / memoryIndex : 0;
         resultDisplay = String.valueOf(average);
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("resources/Bitacora.txt", true))) {
+            writer.write("Avg ");
+           
+            for (int i = 0; i < memoryIndex; i++) {
+                writer.write(Double.toString(memory[i]) + " ");
+            }
+             
+            writer.write(" = " + resultDisplay);
+            writer.newLine();
+        } 
+        
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     private boolean esPrimo(double number) {
         if (number <= 1) {
             return false;
         }
+
         for (int i = 2; i <= Math.sqrt(number); i++) {
             if (number % i == 0) {
                 return false;
             }
         }
+
         return true;
     }
     
@@ -258,7 +283,19 @@ final class Model {
             boolean esPrimo = esPrimo(number);
             resultDisplay = String.valueOf(esPrimo);
             isPrimoMode = true;
-        } catch (NumberFormatException e) {
+                
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("resources/Bitacora.txt", true))) {
+                writer.write("Primo " + Double.toString(number) + " " + resultDisplay);
+                writer.newLine();
+            } 
+            
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+        } 
+        
+        catch (NumberFormatException e) {
             resultDisplay = "Error";
         }
     }
@@ -267,11 +304,27 @@ final class Model {
         if (memoryIndex < memory.length) {
             memory[memoryIndex] = Double.parseDouble(resultDisplay);
             memoryIndex++;
+            
         } else {
             // Si la memoria está llena, sustituye el número más antiguo
             memoryIndex = 0;
             memory[memoryIndex] = Double.parseDouble(resultDisplay);
         }
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("resources/Bitacora.txt", true))) {
+            writer.write("M+ " + resultDisplay + " > ");
+           
+            for (int i = 0; i < memoryIndex; i++) {
+                writer.write(Double.toString(memory[i]) + " ");
+             }
+             
+            writer.newLine();
+        } 
+        
+        catch (IOException e) {
+                e.printStackTrace();
+        }
+            
         reset();
     }
     
@@ -291,9 +344,12 @@ final class Model {
             scrollPane.setPreferredSize(new Dimension(400, 300));
             return scrollPane;
             
-        } catch (IOException e) {
+        } 
+        
+        catch (IOException e) {
             e.printStackTrace();
         }
+        
         return null;
     }
     private void enterErrorMode() {
