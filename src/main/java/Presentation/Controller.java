@@ -1,16 +1,22 @@
 package Presentation;
 
+import BusinessLogic.Operations;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 
 final class Controller {
 
     private final Model model;
     private final View view;
-
+    private Operations operations;
+    
     public Controller(Model m, View v) {
         model = m;
         view = v;
+        operations = new Operations();
+        
         initView();
         initController();
     }
@@ -141,6 +147,7 @@ final class Controller {
     }
 
     private void pressOperationButton(char op) {
+        pressEqualButton();
         model.setOperation(op);
         updateView();
     }
@@ -156,32 +163,65 @@ final class Controller {
     }
 
     private void pressEqualButton() {
-        model.calculate();
+        if (model.isBinaryMode) {
+            model.resultDisplay = "Error: Modo Binario";
+            return;
+        }
+        if (model.isPrimoMode) {
+            model.resultDisplay = "Error: Modo Primo";
+            return;
+        }
+        
+        if (model.inErrorMode) {
+            return;
+        }
+
+        if (model.currentOp.isEmpty()) {
+            return;
+        }
+ 
+        char op = model.currentOp.charAt(0);
+        Double valueIndisplay = Double.valueOf(model.resultDisplay);
+        double result = Operations.doTheMath(op, model.tempValue, valueIndisplay);
+        
+        model.calculate(result);
+        operations.writeOperation(Double.toString(model.tempValue), String.valueOf(op), valueIndisplay.toString(), model.resultDisplay);
+        model.firstDigit = true;
         updateView();
     }
     
     private void pressMemButton() {
-        model.memory();
+        operations.memory(model.resultDisplay);
+        pressResetButton();
         updateView();
     }
     
     private void pressBinButton() {
-        model.binary();
+        double number = Double.parseDouble(model.resultDisplay);
+        String binaryValue = operations.toBinary(number);
+        model.binary(binaryValue);
+        operations.writeAction("binary", number, binaryValue);
         updateView();
     }
     
     private void pressAvgButton() {
-        model.average();
+        double sum = 0;
+        model.average(operations.averageCalc(sum));
+        operations.writeAction("avg", 0, model.resultDisplay);
         updateView();
     }
     
     private void pressPrimoButton() {
-        model.primo();
+        double number = Double.valueOf(model.resultDisplay);
+        boolean esPrimo = operations.esPrimo(number);
+        model.primo(esPrimo);
+        operations.writeAction("primo", number, Boolean.toString(esPrimo));
         updateView();
     }
     
     private void pressDataButton() {
-        model.get_data();
+        JScrollPane scrollPane = operations.getData();
+        JOptionPane.showMessageDialog(view, scrollPane, "Bitácora", JOptionPane.PLAIN_MESSAGE);
         updateView();
     }
 }

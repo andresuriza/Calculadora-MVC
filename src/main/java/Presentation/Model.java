@@ -1,29 +1,29 @@
 package Presentation;
 
-import BusinessLogic.Operations;
+import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 final class Model {
-    private String resultDisplay;
-    private String currentOp;
-    private double tempValue;
-    private boolean inErrorMode;
-    private boolean firstDigit;
+    public String resultDisplay;
+    public String currentOp;
+    public double tempValue;
+    public boolean inErrorMode;
+    public boolean firstDigit;
     private final static int MAX_INPUT_DIGITS = 12;
-    private final static int MAX_RESULT_DECIMALS = 5;
-    private Operations businessOp = new Operations();
 
+    public static boolean isBinaryMode = false;
+    public static boolean isPrimoMode = false;
+    
     public Model() {
         reset();
-    }
-
-    private double doTheMath(char op, double v1, double v2) {
-        return businessOp.operationExec(op, v1, v2);
-    }
-
-    private double round(double value, int places) {
-        return businessOp.roundLogic(value, places);
     }
 
     public String getResultDisplay() {
@@ -35,23 +35,29 @@ final class Model {
     }
 
     public void insertNumber(int n) {
+        if (isBinaryMode) {
+            resultDisplay = "Error: Modo Binario";
+            return;
+        }
+        if (isPrimoMode) {
+            resultDisplay = "Error: Modo Primo";
+            return;
+        }
+        
         if (inErrorMode) {
             return;
         }
 
-        // Control if we have to replace the display
         if (firstDigit) {
             resultDisplay = String.valueOf(n);
             firstDigit = false;
             return;
         }
-        
-        // Control we don't go over the limit of the display
+
         if (resultDisplay.length() >= MAX_INPUT_DIGITS) {
             return;
         }
 
-        // Control we don't have 0s on the left
         if (resultDisplay.equals("0")) {
             resultDisplay = String.valueOf(n);
             return;
@@ -69,7 +75,6 @@ final class Model {
             return;
         }
 
-        // Control that if it is the firstDigit it will add a 0 to the left
         if (firstDigit) {
             resultDisplay = "0.";
             firstDigit = false;
@@ -80,7 +85,6 @@ final class Model {
             return;
         }
 
-        // Control we don't have more than one dot at the same time
         if (resultDisplay.contains(".")) {
             return;
         }
@@ -88,82 +92,40 @@ final class Model {
         resultDisplay += ".";
     }
 
-    public void switchSign() {
-        if (inErrorMode) {
-            return;
-        }
-
-        // Control if we are expecting the user to introduce a new number
-        if (firstDigit && !currentOp.isEmpty()) {
-            resultDisplay = "-0";
-            firstDigit = false;
-            return;
-        }
-
-        if (resultDisplay.charAt(0) == '-') {
-            resultDisplay = resultDisplay.substring(1);
-        } else {
-            resultDisplay = "-" + resultDisplay;
-        }
-
-        if (firstDigit) {
-            firstDigit = false;
-        }
-    }
-
     public void setOperation(char op) {
-        calculate();
-
+        if (isBinaryMode) {
+            resultDisplay = "Error: Modo Binario";
+            return;
+        }
+        if (isPrimoMode) {
+            resultDisplay = "Error: Modo Primo";
+            return;
+        }
         if (inErrorMode) {
             return;
         }
 
         try {
-            // Stores the current value on display so we don't loose it when the
-            // user introduces a new number
             tempValue = Double.valueOf(resultDisplay);
 
             currentOp = String.valueOf(op);
 
-            // After this operation we expect the user to introduce a new number
             firstDigit = true;
         } catch (Exception e) {
             enterErrorMode();
         }
     }
 
-    public void calculate() {
-        if (inErrorMode) {
-            return;
-        }
-
-        if (currentOp.isEmpty()) {
-            return;
-        }
-
+    public void calculate(double result) {
+                                        
         try {
-            char op = currentOp.charAt(0);
-            Double valueIndisplay = Double.valueOf(resultDisplay);
-
-            Double result = doTheMath(op, tempValue, valueIndisplay);
-
-            resultDisplay = result.toString();
-            currentOp = "";
-
-            // After this operation we expect the user to introduce a new number
-            firstDigit = true;
-        } catch (NumberFormatException | ArithmeticException e) {
+            resultDisplay = Double.toString(result);
+            currentOp = "";          
+        } 
+        
+        catch (NumberFormatException | ArithmeticException e) {
             enterErrorMode();
         }
-    }
-
-    public void clean() {
-        if (inErrorMode) {
-            return;
-        }
-
-        resultDisplay = "0";
-        firstDigit = true;
     }
 
     public void reset() {
@@ -172,33 +134,37 @@ final class Model {
         resultDisplay = "0";
         firstDigit = true;
         inErrorMode = false;
-
+        isBinaryMode = false; // Sale del modo binario
+        isPrimoMode = false; //sale del modo primo
         currentOp = "";
     }
     
-    public void binary() {
-        //TODO
-        System.out.println("Binary button pressed");
+    public void binary(String binaryValue) {
+        try {
+            resultDisplay = binaryValue;
+            isBinaryMode = true;
+        }    
+        
+        catch (NumberFormatException e) {
+            resultDisplay = "Error";
+        }
+
     }
     
-    public void average() {
-        //TODO
-        System.out.println("Average button pressed");
+    public void average(double average) {
+        resultDisplay = String.valueOf(average);
     }
     
-    public void primo() {
-        //TODO
-        System.out.println("Primo button pressed");
-    }
-    
-    public void memory() {
-        //TODO
-        System.out.println("Memory button pressed");
-    }
-    
-    public void get_data() {
-        //TODO
-        System.out.println("Data button pressed");
+    public void primo(boolean esPrimo) {
+        try {
+            resultDisplay = String.valueOf(esPrimo);
+            isPrimoMode = true;
+            
+        } 
+        
+        catch (NumberFormatException e) {
+            resultDisplay = "Error";
+        }
     }
 
     private void enterErrorMode() {

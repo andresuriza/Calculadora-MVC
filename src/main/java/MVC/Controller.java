@@ -185,7 +185,6 @@ final class Controller {
     private void pressDataButton() {
         JScrollPane scrollPane = model.getData();
         JOptionPane.showMessageDialog(view, scrollPane, "Bitácora", JOptionPane.PLAIN_MESSAGE);
-        model.getData();
         updateView();
     }
 }
